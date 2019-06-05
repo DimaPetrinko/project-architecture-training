@@ -28,14 +28,8 @@ namespace Application
 			image.color = randomColor;
 		}
 		
-		private void OnSomeButtonClicked()
-		{
-			ButtonClicked?.Invoke();
-		}
+		private void OnSomeButtonClicked() => ButtonClicked?.Invoke();
 
-		private void OnDestroy()
-		{
-			ButtonClicked -= OnButtonClicked;
-		}
+		private void OnDestroy() => ButtonClicked -= OnButtonClicked;
 	}
 }
