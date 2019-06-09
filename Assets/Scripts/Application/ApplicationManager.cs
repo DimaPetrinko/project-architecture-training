@@ -1,35 +1,25 @@
-﻿using System;
+﻿using Game;
+using MainMenu;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Application
 {
-	public class ApplicationManager : MonoBehaviour
+	public sealed class ApplicationManager : MonoBehaviour
 	{
-		public event Action ButtonClicked;
+		public static ApplicationManager Instance { get; private set; }
+
+		public MainMenuManager MainMenuManager { get; set; }
+		public GameManager GameManager { get; set; }
 		
-		[SerializeField] private Button someButton;
-		[SerializeField] private Image image;
-		
-		public MainMenuManager MainMenuManager { get; }
+		public ApplicationScenes CurrentGame { get; set; }
 
 		private void Awake()
 		{
+			Instance = this;
 			DontDestroyOnLoad(this);
-			
-			someButton.onClick.AddListener(OnSomeButtonClicked);
-
-			ButtonClicked += OnButtonClicked;
 		}
 
-		private void OnButtonClicked()
-		{
-			// always unsubscribe from the event
-			image.color = randomColor;
-		}
-		
-		private void OnSomeButtonClicked() => ButtonClicked?.Invoke();
-
-		private void OnDestroy() => ButtonClicked -= OnButtonClicked;
+		private void Start() => SceneManager.LoadScene(ApplicationScenes.MainMenu.ToString());
 	}
 }
