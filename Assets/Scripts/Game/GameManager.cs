@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Application;
 using Game.GameScene;
@@ -23,10 +22,8 @@ namespace Game
 
 		private void Awake() => ApplicationManager.Instance.GameManager = this;
 
-		private void Start()
-		{
-			SceneManager.LoadScene(ApplicationManager.Instance.CurrentGame.ToString(), LoadSceneMode.Additive);
-		}
+		private void Start() => SceneManager.LoadScene(ApplicationManager.Instance.CurrentGameScene.ToString(),
+			LoadSceneMode.Additive);
 
 		private void StartGame()
 		{

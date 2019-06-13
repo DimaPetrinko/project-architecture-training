@@ -1,5 +1,6 @@
 using Application;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.GameScene
 {
@@ -11,8 +12,10 @@ namespace Game.GameScene
 		public PlayerView PlayerView => playerView;
 		public WallView WallPrefab => wallPrefab;
 
-		private void Awake()
+		private void Start()
 		{
+			Debug.Log(gameObject.scene.name);
+			SceneManager.SetActiveScene(gameObject.scene);
 			ApplicationManager.Instance.GameManager.RegisterGameSceneManager(this);
 		}
 	}

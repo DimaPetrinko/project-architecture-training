@@ -12,7 +12,7 @@ namespace Application
 		public MainMenuManager MainMenuManager { get; set; }
 		public GameManager GameManager { get; set; }
 		
-		public ApplicationScenes CurrentGame { get; set; }
+		public ApplicationScenes CurrentGameScene { get; set; }
 
 		private void Awake()
 		{
