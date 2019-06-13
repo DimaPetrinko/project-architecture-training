@@ -13,9 +13,9 @@ namespace Game
 	{
 		[SerializeField] private Button exitButton;
 		[SerializeField] private TMP_Text scoreText;
-		[SerializeField] private WallSpawner wallSpawner;
 
 		private GameSceneManager currentGameSceneManager;
+		private WallSpawner wallSpawner;
 		private PlayerView player;
 		private List<WallView> walls;
 		private uint totalScore;
@@ -29,14 +29,16 @@ namespace Game
 		{
 			exitButton.onClick.RemoveAllListeners();
 			exitButton.onClick.AddListener(OnExitButtonClicked);
-			
+
 			walls = new List<WallView>();
+			wallSpawner = currentGameSceneManager.WallSpawner;
 			wallSpawner.ObjectSpawned += OnWallSpawned;
 			wallSpawner.StartSpawning(currentGameSceneManager.WallPrefab,
 				currentGameSceneManager.WallPrefab.transform.parent);
 			
 			player = currentGameSceneManager.PlayerView;
 			ResetPlayer();
+			ResetScore();
 		}
 
 		public void RegisterGameSceneManager(GameSceneManager gameSceneManager)
@@ -82,9 +84,15 @@ namespace Game
 			player.transform.position = Vector3.zero; // TODO: Temp. later place him on starting position transform
 		}
 
+		private void ResetScore()
+		{
+			totalScore = 0;
+			UpdateTotalScoreText();
+		}
+
 		private void OnExitButtonClicked() => SceneManager.LoadScene(ApplicationScenes.MainMenu.ToString());
 
-		private void UpdateTotalScoreText() => scoreText.text = totalScore.ToString();
+		private void UpdateTotalScoreText() => scoreText.text = $"Score: {totalScore}";
 
 		private void OnDestroy()
 		{
