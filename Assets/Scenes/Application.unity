@@ -155,3 +155,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8e8755d3cd3a64387b00d51471f784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  marketItems: {fileID: 11400000, guid: 3d81683365cad654d8319fa108810cc0, type: 2}

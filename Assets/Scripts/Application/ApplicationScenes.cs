@@ -4,9 +4,6 @@ namespace Application
 	{
 		Application,
 		MainMenu,
-		Game,
-		GameScene1,
-		GameScene2,
-		GameScene3
+		Market
 	}
 }

@@ -1,5 +1,6 @@
-﻿using Game;
-using MainMenu;
+﻿using MainMenu;
+using Market;
+using Servers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,22 +8,19 @@ namespace Application
 {
 	public sealed class ApplicationManager : MonoBehaviour
 	{
-		private static ApplicationManager instance;
-
-		public static ApplicationManager Instance
-		{
-			get
-			{
-				if (instance == null) SceneManager.LoadScene(ApplicationScenes.Application.ToString());
-				return instance;
-			}
-			private set => instance = value;
-		}
-
-		public MainMenuManager MainMenuManager { get; set; }
-		public GameManager GameManager { get; set; }
+		[SerializeField] private MarketItems marketItems;
 		
-		public ApplicationScenes CurrentGameScene { get; set; }
+		public static ApplicationManager Instance { get; private set; }
+
+		public IServer Server { get; private set; }
+		public MainMenuManager MainMenuManager { get; set; }
+		public MarketManager MarketManager { get; set; }
+
+		public MarketItems MarketItems
+		{
+			get => marketItems;
+			set => marketItems = value;
+		}
 
 		private void Awake()
 		{
@@ -30,6 +28,17 @@ namespace Application
 			DontDestroyOnLoad(this);
 		}
 
-		private void Start() => SceneManager.LoadScene(ApplicationScenes.MainMenu.ToString());
+		private void Start()
+		{
+			Debug.Log("Starting server");
+			Server = new SimpleServer();
+			Server.Initialize(OnServerInitialized);
+
+			void OnServerInitialized(string sessionId)
+			{
+				Debug.Log($"Server initialized and returned session id {sessionId}");
+				SceneManager.LoadScene(ApplicationScenes.MainMenu.ToString());
+			}
+		}
 	}
 }
