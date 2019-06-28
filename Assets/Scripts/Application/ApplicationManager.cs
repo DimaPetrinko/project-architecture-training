@@ -1,15 +1,18 @@
-﻿using MainMenu;
+﻿using System;
+using System.Collections.Generic;
+using MainMenu;
 using Market;
 using Servers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Application
 {
 	public sealed class ApplicationManager : MonoBehaviour
 	{
 		[SerializeField] private MarketItems marketItems;
-		
+
 		public static ApplicationManager Instance { get; private set; }
 
 		public IServer Server { get; private set; }
@@ -39,6 +42,10 @@ namespace Application
 				Debug.Log($"Server initialized and returned session id {sessionId}");
 				SceneManager.LoadScene(ApplicationScenes.MainMenu.ToString());
 			}
+
+			List<MarketItem> marketItem;
+			ApplicationManager.Instance.Server.GetMarketItems((success, items) => marketItem = items);
+			
 		}
 	}
 }
